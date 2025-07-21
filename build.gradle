@@ -23,7 +23,24 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom:2.17.0"
+	}
+}
+
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	// OpenTelemetry Spring Boot Starter
+	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
+
+	// OTLP Exporter
+	implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
+
+	// For log correlation
+	implementation 'io.opentelemetry:opentelemetry-sdk-extension-autoconfigure'
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
