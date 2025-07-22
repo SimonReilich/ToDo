@@ -1,30 +1,3 @@
 spring:
   application:
     name: todo
-
-otel:
-  service:
-    name: test-app
-  resource:
-    attributes:
-      service:
-        namespace: backend
-      deployment:
-        environment: local
-  logs:
-    exporter: none
-  metrics:
-    exporter: none
-  traces:
-    exporter: otlp
-    sampler: parentbased_traceidratio
-    sampler.arg: 1.0
-  exporter:
-    otlp:
-      protocol: http/protobuf
-      traces:
-        endpoint: http://cwe-513-linux102.cern.ch:4318/v1/traces
-  propagators: tracecontext,baggage
-  instrumentation:
-    spring-web:
-      enabled: true

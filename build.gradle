@@ -31,15 +31,7 @@ dependencyManagement {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-	// OpenTelemetry Spring Boot Starter
-	implementation 'io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter'
-
-	// OTLP Exporter
-	implementation 'io.opentelemetry:opentelemetry-exporter-otlp'
-
-	// For log correlation
-	implementation 'io.opentelemetry:opentelemetry-sdk-extension-autoconfigure'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

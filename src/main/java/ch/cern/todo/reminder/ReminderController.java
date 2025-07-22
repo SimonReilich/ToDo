@@ -1,16 +1,14 @@
 package ch.cern.todo.reminder;
 
 import ch.cern.todo.errors.ReminderNotFoundException;
-import ch.cern.todo.note.NoteRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/reminders")
+@RequestMapping("/api/reminders")
 public class ReminderController {
 
     public final ReminderRepository reminderRepository;

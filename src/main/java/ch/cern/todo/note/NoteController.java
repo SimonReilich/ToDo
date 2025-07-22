@@ -5,6 +5,7 @@ import ch.cern.todo.errors.NoteNotFoundException;
 import ch.cern.todo.errors.ReminderNotFoundException;
 import ch.cern.todo.reminder.Reminder;
 import ch.cern.todo.reminder.ReminderRepository;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.NonNull;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/notes")
+@RequestMapping("/api/notes")
 @RequiredArgsConstructor
 public class NoteController {
 
@@ -34,7 +35,8 @@ public class NoteController {
     }
 
     @PostMapping
-    public Note createNote(@RequestBody NoteContent note) {
+    public Note createNote(@Valid @RequestBody NoteContent note) {
+        //if (note.reminders() == null) throw new BadRequestException();
         reminderRepository.saveAll(note.reminders());
         return noteRepository.save(new Note(note));
     }
