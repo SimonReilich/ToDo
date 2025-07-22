@@ -1,7 +1,9 @@
 package ch.cern.todo.reminder;
 
+import ch.cern.todo.errors.ReminderNotFoundException;
 import ch.cern.todo.note.NoteRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 @RequestMapping("/reminders")
 public class ReminderController {
 
-    public final NoteRepository noteRepository;
     public final ReminderRepository reminderRepository;
 
     @GetMapping
@@ -21,7 +22,7 @@ public class ReminderController {
 
     @GetMapping("{id}")
     public Reminder getReminder(@PathVariable Long id) {
-        return reminderRepository.findById(id).orElse(null);
+        return reminderRepository.findById(id).orElseThrow(() -> new ReminderNotFoundException(id));
     }
 
     @PostMapping
@@ -31,23 +32,17 @@ public class ReminderController {
 
     @PutMapping("{id}")
     public Reminder updateReminder(@PathVariable Long id, @RequestBody ReminderContent reminder) {
-        Reminder data = reminderRepository.findById(id).orElse(null);
-        if (data != null) {
-            data.setTitle(reminder.title());
-            data.setDate(reminder.date());
-            return reminderRepository.save(data);
-        }
-        return null;
+        Reminder data = reminderRepository.findById(id).orElseThrow(() -> new ReminderNotFoundException(id));
+        data.setTitle(reminder.title());
+        data.setDate(reminder.date());
+        return reminderRepository.save(data);
     }
 
     @PutMapping("complete/{id}")
     public Reminder completeReminder(@PathVariable Long id) {
-        Reminder reminder = reminderRepository.findById(id).orElse(null);
-        if (reminder != null) {
-            reminder.setDone(true);
-            return reminderRepository.save(reminder);
-        }
-        return null;
+        Reminder reminder = reminderRepository.findById(id).orElseThrow(() -> new ReminderNotFoundException(id));
+        reminder.setDone(true);
+        return reminderRepository.save(reminder);
     }
 
     @DeleteMapping("{id}")
