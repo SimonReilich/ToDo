@@ -6,5 +6,5 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.Instant;
 
-public record ReminderContent(@NotNull @NotBlank String title, @NotNull Instant date, Category category) {
+public record ReminderContent(@NotNull @NotBlank String title, @NotNull String date, Category category) {
 }

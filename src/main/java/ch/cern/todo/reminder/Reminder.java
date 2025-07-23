@@ -32,7 +32,7 @@ public class Reminder {
     private String title;
 
     @Column
-    private Instant date;
+    private String date;
 
     @Column
     private Category category;

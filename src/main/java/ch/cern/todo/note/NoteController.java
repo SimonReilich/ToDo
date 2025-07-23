@@ -1,16 +1,11 @@
 package ch.cern.todo.note;
 
-import ch.cern.todo.errors.BadRequestException;
 import ch.cern.todo.errors.NoteNotFoundException;
 import ch.cern.todo.errors.ReminderNotFoundException;
 import ch.cern.todo.reminder.Reminder;
 import ch.cern.todo.reminder.ReminderRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,7 +42,6 @@ public class NoteController {
 
     @PutMapping("{id}")
     public Note updateNote(@PathVariable long id, @RequestBody NoteContent note) {
-        if (note == null) throw new BadRequestException();
         Note data = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
         data.setName(note.name());
         data.setDescription(note.description());
