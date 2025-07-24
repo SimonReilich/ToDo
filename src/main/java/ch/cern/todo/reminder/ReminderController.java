@@ -33,6 +33,7 @@ public class ReminderController {
         Reminder data = reminderRepository.findById(id).orElseThrow(() -> new ReminderNotFoundException(id));
         data.setTitle(reminder.title());
         data.setDate(reminder.date());
+        data.setCategory(reminder.category());
         return reminderRepository.save(data);
     }
 

@@ -45,6 +45,7 @@ public class NoteController {
         Note data = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
         data.setName(note.name());
         data.setDescription(note.description());
+        data.setCategory(note.category());
         return noteRepository.save(data);
     }
 
