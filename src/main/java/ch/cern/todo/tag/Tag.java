@@ -1,6 +1,7 @@
 package ch.cern.todo.tag;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,8 @@ public class Tag {
 
     @Column
     private String name;
+
+    public Tag(@Valid TagContent tag) {
+        this.name = tag.name().trim();
+    }
 }

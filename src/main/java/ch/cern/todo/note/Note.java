@@ -40,8 +40,8 @@ public class Note {
     private Category category;
 
     Note(NoteContent content) {
-        name = content.name();
-        description = content.description();
+        name = content.name().trim();
+        description = content.description().trim();
         reminders = content.reminders();
         category = content.category();
     }

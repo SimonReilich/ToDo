@@ -17,8 +17,8 @@ import java.time.Instant;
 public class Reminder {
 
     Reminder(ReminderContent content) {
-        title = content.title();
-        date = content.date();
+        title = content.title().trim();
+        date = content.date().trim();
         category = content.category();
         done = false;
     }

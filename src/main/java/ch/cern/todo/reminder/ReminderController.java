@@ -1,5 +1,6 @@
 package ch.cern.todo.reminder;
 
+import ch.cern.todo.errors.BadRequestException;
 import ch.cern.todo.errors.ReminderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,14 @@ public class ReminderController {
 
     @PostMapping
     public Reminder createReminder(@RequestBody ReminderContent reminder) {
+        if (reminder.title().trim().isEmpty()) throw new BadRequestException();
         return reminderRepository.save(new Reminder(reminder));
     }
 
     @PutMapping("{id}")
     public Reminder updateReminder(@PathVariable Long id, @RequestBody ReminderContent reminder) {
         Reminder data = reminderRepository.findById(id).orElseThrow(() -> new ReminderNotFoundException(id));
+        if (reminder.title().trim().isEmpty()) throw new BadRequestException();
         data.setTitle(reminder.title());
         data.setDate(reminder.date());
         data.setCategory(reminder.category());

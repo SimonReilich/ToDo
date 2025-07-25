@@ -1,5 +1,6 @@
 package ch.cern.todo.note;
 
+import ch.cern.todo.errors.BadRequestException;
 import ch.cern.todo.errors.NoteNotFoundException;
 import ch.cern.todo.errors.ReminderNotFoundException;
 import ch.cern.todo.reminder.Reminder;
@@ -31,6 +32,7 @@ public class NoteController {
 
     @PostMapping
     public Note createNote(@Valid @RequestBody NoteContent note) {
+        if (note.name().trim().isEmpty()) throw new BadRequestException();
         if (!note.reminders().isEmpty()) {
             for (Reminder reminder : note.reminders()) {
                 if (reminder.getCategory() == null) reminder.setCategory(note.category());
@@ -43,6 +45,7 @@ public class NoteController {
     @PutMapping("{id}")
     public Note updateNote(@PathVariable long id, @RequestBody NoteContent note) {
         Note data = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
+        if (note.name().trim().isEmpty()) throw new BadRequestException();
         data.setName(note.name());
         data.setDescription(note.description());
         data.setCategory(note.category());
