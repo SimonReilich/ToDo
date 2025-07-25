@@ -2,6 +2,7 @@ package ch.cern.todo.note;
 
 import ch.cern.todo.Category;
 import ch.cern.todo.reminder.Reminder;
+import ch.cern.todo.tag.Tag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,10 +40,17 @@ public class Note {
     @Column
     private Category category;
 
+    @Column
+    @ManyToOne
+    @JoinColumn
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Tag tag;
+
     Note(NoteContent content) {
         name = content.name().trim();
         description = content.description().trim();
         reminders = content.reminders();
         category = content.category();
+        tag = content.tag();
     }
 }

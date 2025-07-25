@@ -1,8 +1,11 @@
 package ch.cern.todo.tag;
 
 import ch.cern.todo.errors.BadRequestException;
-import ch.cern.todo.errors.NoteNotFoundException;
 import ch.cern.todo.errors.TagNotFoundException;
+import ch.cern.todo.note.Note;
+import ch.cern.todo.note.NoteRepository;
+import ch.cern.todo.reminder.Reminder;
+import ch.cern.todo.reminder.ReminderRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,8 @@ import java.util.List;
 public class TagControler {
 
     private final TagRepository tagRepository;
+    private final NoteRepository noteRepository;
+    private final ReminderRepository reminderRepository;
 
     @GetMapping
     public List<Tag> getTags() {
@@ -43,7 +48,21 @@ public class TagControler {
     @PutMapping("{id1}/{id2}")
     public void mergeTags(@PathVariable long id1, @PathVariable long id2) {
         if (id1 == id2) throw new BadRequestException();
-        tagRepository.deleteById(id2);
+        Tag tag = tagRepository.findById(id1).orElseThrow(() -> new TagNotFoundException(id1));
+        List<Note> notes = noteRepository.findAll();
+        for (Note note : notes) {
+            if (note.getTag().getId() == id2) {
+                note.setTag(tag);
+                noteRepository.save(note);
+            }
+        }
+        List<Reminder> reminders = reminderRepository.findAll();
+        for (Reminder reminder : reminders) {
+            if (reminder.getTag().getId() == id2) {
+                reminder.setTag(tag);
+                reminderRepository.save(reminder);
+            }
+        }
     }
 
     @DeleteMapping("{id}")
