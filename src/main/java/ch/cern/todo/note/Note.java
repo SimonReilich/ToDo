@@ -40,7 +40,6 @@ public class Note {
     @Column
     private Category category;
 
-    @Column
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)

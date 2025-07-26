@@ -44,7 +44,6 @@ public class Reminder {
     @Column
     private boolean done = false;
 
-    @Column
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
