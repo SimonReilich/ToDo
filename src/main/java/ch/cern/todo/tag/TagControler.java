@@ -51,14 +51,14 @@ public class TagControler {
         Tag tag = tagRepository.findById(id1).orElseThrow(() -> new TagNotFoundException(id1));
         List<Note> notes = noteRepository.findAll();
         for (Note note : notes) {
-            if (note.getTag().getId() == id2) {
+            if (note.getTag() != null && note.getTag().getId() == id2) {
                 note.setTag(tag);
                 noteRepository.save(note);
             }
         }
         List<Reminder> reminders = reminderRepository.findAll();
         for (Reminder reminder : reminders) {
-            if (reminder.getTag().getId() == id2) {
+            if (reminder.getTag() != null && reminder.getTag().getId() == id2) {
                 reminder.setTag(tag);
                 reminderRepository.save(reminder);
             }
