@@ -8,12 +8,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.regex.Pattern;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class Tag {
+
+    private final static String REGEX = "^[a-zA-Z0-9]*$";
+    private final static Pattern PATTERN = Pattern.compile(REGEX);
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +31,6 @@ public class Tag {
     public Tag(@Valid TagContent tag) {
         this.name = tag.name().trim();
         if (name.isEmpty()) throw new BadRequestException();
+        if (!PATTERN.matcher(name).matches()) throw new BadRequestException();
     }
 }
