@@ -33,11 +33,6 @@ public class NoteController {
     @PostMapping
     public Note createNote(@Valid @RequestBody NoteContent note) {
         if (note.name().trim().isEmpty()) throw new BadRequestException();
-        if (!note.reminders().isEmpty()) {
-            for (Reminder reminder : note.reminders()) {
-                if (reminder.getCategory() == null) reminder.setCategory(note.category());
-            }
-        }
         reminderRepository.saveAll(note.reminders());
         return noteRepository.save(new Note(note));
     }
@@ -48,7 +43,6 @@ public class NoteController {
         if (note.name().trim().isEmpty()) throw new BadRequestException();
         data.setName(note.name());
         data.setDescription(note.description());
-        data.setCategory(note.category());
         return noteRepository.save(data);
     }
 
@@ -57,11 +51,6 @@ public class NoteController {
         Note note = noteRepository.findById(id).orElseThrow(() -> new NoteNotFoundException(id));
         Reminder reminder = reminderRepository.findById(rId).orElseThrow(() -> new ReminderNotFoundException(rId));
         note.getReminders().add(reminder);
-        if (reminder.getCategory() == null) {
-            reminder.setCategory(note.getCategory());
-        } else if (note.getCategory() == null) {
-            note.setCategory(reminder.getCategory());
-        }
         return noteRepository.save(note);
     }
 

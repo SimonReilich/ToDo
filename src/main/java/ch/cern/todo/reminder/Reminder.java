@@ -1,6 +1,5 @@
 package ch.cern.todo.reminder;
 
-import ch.cern.todo.Category;
 import ch.cern.todo.tag.Tag;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,8 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.time.Instant;
 
 @Entity
 @AllArgsConstructor
@@ -22,7 +19,6 @@ public class Reminder {
     Reminder(ReminderContent content) {
         title = content.title().trim();
         date = content.date().trim();
-        category = content.category();
         done = false;
         tag = content.tag();
     }
@@ -37,9 +33,6 @@ public class Reminder {
 
     @Column
     private String date;
-
-    @Column
-    private Category category;
 
     @Column
     private boolean done = false;

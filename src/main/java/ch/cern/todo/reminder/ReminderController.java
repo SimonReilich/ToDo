@@ -36,7 +36,7 @@ public class ReminderController {
         if (reminder.title().trim().isEmpty()) throw new BadRequestException();
         data.setTitle(reminder.title());
         data.setDate(reminder.date());
-        data.setCategory(reminder.category());
+        data.setTag(reminder.tag());
         return reminderRepository.save(data);
     }
 

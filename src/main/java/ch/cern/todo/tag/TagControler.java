@@ -63,6 +63,7 @@ public class TagControler {
                 reminderRepository.save(reminder);
             }
         }
+        tagRepository.deleteById(id2);
     }
 
     @DeleteMapping("{id}")

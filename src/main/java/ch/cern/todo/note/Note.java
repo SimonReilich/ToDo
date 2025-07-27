@@ -1,6 +1,5 @@
 package ch.cern.todo.note;
 
-import ch.cern.todo.Category;
 import ch.cern.todo.reminder.Reminder;
 import ch.cern.todo.tag.Tag;
 import jakarta.persistence.*;
@@ -37,9 +36,6 @@ public class Note {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Reminder> reminders;
 
-    @Column
-    private Category category;
-
     @ManyToOne
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -49,7 +45,6 @@ public class Note {
         name = content.name().trim();
         description = content.description().trim();
         reminders = content.reminders();
-        category = content.category();
         tag = content.tag();
     }
 }
