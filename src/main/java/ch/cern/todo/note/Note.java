@@ -1,5 +1,6 @@
 package ch.cern.todo.note;
 
+import ch.cern.todo.errors.BadRequestException;
 import ch.cern.todo.reminder.Reminder;
 import ch.cern.todo.tag.Tag;
 import jakarta.persistence.*;
@@ -46,5 +47,6 @@ public class Note {
         description = content.description().trim();
         reminders = content.reminders();
         tag = content.tag();
+        if (name.isEmpty()) throw new BadRequestException();
     }
 }

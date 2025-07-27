@@ -8,5 +8,6 @@ import org.springframework.lang.Nullable;
 
 import java.util.Set;
 
-public record NoteContent(@NotNull @NotBlank String name, @NotNull @NotBlank String description, @NotNull Set<Reminder> reminders, @Nullable Tag tag) {
+public record NoteContent(@NotNull @NotBlank String name, @NotNull @NotBlank String description,
+                          @NotNull Set<Reminder> reminders, @Nullable Tag tag) {
 }

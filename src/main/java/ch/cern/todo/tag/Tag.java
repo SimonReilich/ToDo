@@ -1,5 +1,6 @@
 package ch.cern.todo.tag;
 
+import ch.cern.todo.errors.BadRequestException;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -19,10 +20,11 @@ public class Tag {
     @Column
     private long id;
 
-    @Column
+    @Column(unique=true)
     private String name;
 
     public Tag(@Valid TagContent tag) {
         this.name = tag.name().trim();
+        if (name.isEmpty()) throw new BadRequestException();
     }
 }
